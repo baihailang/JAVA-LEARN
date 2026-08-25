@@ -11,13 +11,14 @@
             "id": "9b9853daf4ef2991",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "markdown",
               "state": {
-                "file": "未命名.base",
-                "viewName": "表格"
+                "file": "java基础学习/多线程.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-table",
-              "title": "未命名"
+              "icon": "lucide-file",
+              "title": "多线程"
             }
           }
         ]
@@ -190,13 +191,13 @@
   },
   "active": "9b9853daf4ef2991",
   "lastOpenFiles": [
+    "Pasted image 20260825135352.png",
     "java基础学习/多线程.md",
     "未命名.base",
     "Pasted image 20260825135104.png",
     "java基础学习/13bf62f4-355d-4f89-b01f-f06f84ff598f.md",
     "未命名.canvas",
     "欢迎.md",
-    "Pasted image 20260825135352.png",
     "java基础学习"
   ]
 }
