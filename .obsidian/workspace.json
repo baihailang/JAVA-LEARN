@@ -15,7 +15,7 @@
               "type": "markdown",
               "state": {
                 "file": "java基础学习/多线程.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -106,8 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "11dd02627fec3433",
@@ -214,7 +213,7 @@
       "obsidian-importer:导入笔记": false
     }
   },
-  "active": "6709f2c455495083",
+  "active": "9b9853daf4ef2991",
   "lastOpenFiles": [
     "Pasted image 20260825135352.png",
     "java基础学习/多线程.md",
