@@ -6,7 +6,6 @@
       {
         "id": "52990d3ec89d3920",
         "type": "tabs",
-        "dimension": 75.57840616966581,
         "children": [
           {
             "id": "9b9853daf4ef2991",
@@ -14,34 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "java基础学习/多线程.md",
+                "file": "java基础学习/JVM调优.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "多线程"
-            }
-          }
-        ]
-      },
-      {
-        "id": "de236808885498f3",
-        "type": "tabs",
-        "dimension": 24.42159383033419,
-        "children": [
-          {
-            "id": "6709f2c455495083",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "java基础学习/多线程.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "大纲"
+              "title": "JVM调优"
             }
           }
         ]
@@ -184,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "java基础学习/多线程.md",
+                "file": "java基础学习/JVM调优.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -198,8 +175,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -215,8 +191,13 @@
   },
   "active": "9b9853daf4ef2991",
   "lastOpenFiles": [
-    "Pasted image 20260825135352.png",
     "java基础学习/多线程.md",
+    "java基础学习/JVM调优.md",
+    "Pasted image 20260826213156.png",
+    "Pasted image 20260826205914.png",
+    "Pasted image 20260825135352.png",
+    "Pasted image 20260826212740.png",
+    "Pasted image 20260826205710.png",
     "未命名.base",
     "Pasted image 20260825135104.png",
     "java基础学习/13bf62f4-355d-4f89-b01f-f06f84ff598f.md",
