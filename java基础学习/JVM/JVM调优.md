@@ -109,13 +109,13 @@ Arthas 是阿里巴巴开源的 Java 诊断工具，能在不重启应用的情�
 
 ## 3. 方法监控与诊断（最常用）
 
-| 命令 | 作用 | 示例 |
-|------|------|------|
-| `watch` | 监控方法的**入参、返回值、异常**，支持条件过滤 | `watch com.example.UserService getUserById "{params, returnObj, throwExp}" -x 3 -n 5` |
-| `trace` | 追踪方法**内部调用路径**及每个节点耗时，定位性能瓶颈 | `trace com.example.UserService getUserById '#cost>10' -n 5` |
-| `stack` | 输出方法的**调用路径**（向上追溯，谁调用了该方法） | `stack com.example.UserService getUserById -n 5` |
-| `monitor` | 方法调用统计（次数、成功率、平均耗时等） | `monitor -c 60 com.example.UserService getUserById` |
-| `tt` | 方法调用**时空隧道**，记录每次调用的完整上下文，支持回放 | `tt -t com.example.UserService getUserById`<br>`tt -i 1000 -p`（回放编号 1000 的调用） |
+| 命令        | 作用                             | 示例                                                                                    |
+| --------- | ------------------------------ | ------------------------------------------------------------------------------------- |
+| `watch`   | 监控方法的**入参、返回值、异常**，支持条件过滤      | `watch com.example.UserService getUserById "{params, returnObj, throwExp}" -x 3 -n 5` |
+| `trace`   | 追踪方法**内部调用路径**及每个节点耗时，定位性能瓶颈   | `trace com.example.UserService getUserById '#cost>10' -n 5`                           |
+| `stack`   | 输出方法的**调用路径**（向上追溯，谁调用了该方法）    | `stack com.example.UserService getUserById -n 5`                                      |
+| `monitor` | 方法调用统计（次数、成功率、平均耗时等）           | `monitor -c 60 com.example.UserService getUserById`                                   |
+| `tt`      | 方法调用**时空隧道**，记录每次调用的完整上下文，支持回放 | `tt -t com.example.UserService getUserById`<br>`tt -i 1000 -p`（回放编号 1000 的调用）         |
 
 > **常用参数说明**：
 > - `-n`：限制执行次数
@@ -128,22 +128,23 @@ Arthas 是阿里巴巴开源的 Java 诊断工具，能在不重启应用的情�
 
 ## 4. JVM 与系统诊断
 
-| 命令 | 作用 | 示例 |
-|------|------|------|
-| `heapdump` | 导出堆内存快照，用于内存分析 | `heapdump /tmp/dump.hprof` |
-| `logger` | 查看和动态修改日志级别 | `logger --name com.example.MyClass --level warn` |
-| `sysprop` | 查看和修改 JVM 系统属性 | `sysprop`<br>`sysprop java.version` |
-| `memory` | 查看 JVM 内存使用情况（堆、非堆、各区域） | `memory` |
-| `profiler` | 生成 CPU 火焰图，分析性能热点 | `profiler start`<br>`profiler stop --format html` |
+| 命令         | 作用                      | 示例                                                |
+| ---------- | ----------------------- | ------------------------------------------------- |
+| `heapdump` | 导出堆内存快照，用于内存分析          | `heapdump /tmp/dump.hprof`                        |
+| `logger`   | 查看和动态修改日志级别             | `logger --name com.example.MyClass --level warn`  |
+| `sysprop`  | 查看和修改 JVM 系统属性          | `sysprop`<br>`sysprop java.version`               |
+| `memory`   | 查看 JVM 内存使用情况（堆、非堆、各区域） | `memory`                                          |
+| `profiler` | 生成 CPU 火焰图，分析性能热点       | `profiler start`<br>`profiler stop --format html` |
+|            |                         |                                                   |
 
 ---
 
 ## 5. 代码热更新
 
-| 命令 | 组合作用 | 示例 |
-|------|----------|------|
-| `jad` + `mc` + `retransform` | **三步走**热更新：反编译 → 修改 → 编译 → 加载 | 1. `jad --source-only com.example.UserService > /tmp/UserService.java`<br>2. （手动修改源码）<br>3. `mc /tmp/UserService.java -d /tmp`<br>4. `retransform /tmp/com/example/UserService.class` |
-| `redefine` | 直接热加载 .class 文件（需先 `reset` 消除监控影响） | `redefine /tmp/UserService.class` |
+| 命令                           | 组合作用                               | 示例                                                                                                                                                                                    |
+| ---------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `jad` + `mc` + `retransform` | **三步走**热更新：反编译 → 修改 → 编译 → 加载      | 1. `jad --source-only com.example.UserService > /tmp/UserService.java`<br>2. （手动修改源码）<br>3. `mc /tmp/UserService.java -d /tmp`<br>4. `retransform /tmp/com/example/UserService.class` |
+| `redefine`                   | 直接热加载 .class 文件（需先 `reset` 消除监控影响） | `redefine /tmp/UserService.class`                                                                                                                                                     |
 
 > ⚠️ **注意**：`redefine` 与 `watch`/`trace` 等监控命令冲突，执行前应先 `reset` 清除增强。
 
@@ -211,12 +212,12 @@ JVM 调优的本质，是在以下三个目标之间寻找最适合你业务的�
 
 **参考值（需结合压测调整）**：
 
-| 服务器配置  | `-Xms` / `-Xmx` | `-Xmn` (年轻代) | `-XX:MetaspaceSize` |
-| :----- | :-------------- | :----------- | :------------------ |
-| 1C 2G  | 1G              | 500M         | 128M                |
-| 2C 4G  | 2560M           | 1200M        | 256M                |
-| 4C 8G  | 4G              | 2G           | 384M                |
-| 8C 16G | 10G             | 5G           | 512M                |
+| 服务器配置 | `-Xms` / `-Xmx` | `-Xmn` (年轻代) | `-XX:MetaspaceSize` |
+| :--- | :--- | :--- | :--- |
+| 1C 2G | 1G | 500M | 128M |
+| 2C 4G | 2560M | 1200M | 256M |
+| 4C 8G | 4G | 2G | 384M |
+| 8C 16G | 10G | 5G | 512M |
 
 ### 3.2 分代比例：精细化管理内存
 
@@ -266,17 +267,177 @@ JVM 调优的本质，是在以下三个目标之间寻找最适合你业务的�
 
 ## 6. 调优利器：常用监控工具
 
-| 工具                      | 用途                            | 示例命令                                     |
-| :---------------------- | :---------------------------- | :--------------------------------------- |
-| **`jstat`**             | 命令行工具，实时查看 GC 和内存使用情况         | `jstat -gcutil <pid> 1000`（每秒打印一次 GC 概况） |
-| **`jmap`**              | 生成堆转储（Heap Dump）文件，用于离线分析内存泄漏 | `jmap -dump:live,file=heap.hprof <pid>`  |
-| **VisualVM / JConsole** | 图形化工具，提供 CPU、内存、线程的实时监控       | 界面操作，无需命令行                               |
-| **GC 日志**               | 开启 GC 日志是分析问题的**最基本要求**       | 参见下方参数                                   |
-|                         |                               |                                          |
+| 工具 | 用途 | 示例命令 |
+| :--- | :--- | :--- |
+| **`jstat`** | 命令行工具，实时查看 GC 和内存使用情况 | `jstat -gcutil <pid> 1000`（每秒打印一次 GC 概况） |
+| **`jmap`** | 生成堆转储（Heap Dump）文件，用于离线分析内存泄漏 | `jmap -dump:live,file=heap.hprof <pid>` |
+| **VisualVM / JConsole** | 图形化工具，提供 CPU、内存、线程的实时监控 | 界面操作，无需命令行 |
+| **GC 日志** | 开启 GC 日志是分析问题的**最基本要求** | 参见下方参数 |
 
 **GC 日志常用参数**：
 ```bash
 -Xloggc:/path/to/gc.log      # 指定 GC 日志路径
 -XX:+PrintGCDetails          # 打印 GC 详细信息
 -XX:+PrintGCDateStamps       # 打印 GC 发生的时间戳
+```
 
+
+
+
+# JVM 垃圾回收（GC）方式详解
+
+JVM的垃圾回收（GC）方式可以从两个层面来理解：底层的**回收算法**和上层的**垃圾收集器**。算法是理论，定义了“如何回收”；收集器是实践，是算法的具体实现，决定了回收时的性能表现。
+
+---
+
+## 1. 分代收集理论
+
+现代JVM普遍采用**分代收集**策略，根据对象存活周期的不同，将堆内存划分为不同区域，并对每个区域采用最合适的算法。
+
+### 堆内存划分
+
+| 区域 | 特点 | 适用算法 |
+| :--- | :--- | :--- |
+| **新生代 (Young Generation)** | 对象“朝生夕死”，存活率低 | **复制算法** |
+| **老年代 (Old Generation)** | 对象存活率高，生命周期长 | **标记-清除** 或 **标记-整理** |
+
+---
+
+## 2. 核心回收算法
+
+### 2.1 标记-清除 (Mark-Sweep)
+
+| 属性       | 说明                         |
+| :------- | :------------------------- |
+| **步骤**   | ① 标记所有存活对象 → ② 清除所有未被标记的对象 |
+| **优点**   | 速度快，实现简单                   |
+| **缺点**   | 产生内存碎片，可能导致频繁GC            |
+| **适用区域** | 老年代                        |
+
+### 2.2 复制算法 (Copying)
+
+| 属性       | 说明                                    |
+| :------- | :------------------------------------ |
+| **步骤**   | 将内存分为两块，只使用一块。GC时将存活对象复制到另一块，一次性清理原区域 |
+| **优点**   | 效率高，无内存碎片                             |
+| **缺点**   | 内存利用率低（始终有一块空闲）                       |
+| **适用区域** | 新生代                                   |
+
+### 2.3 标记-整理 (Mark-Compact)
+
+| 属性       | 说明                                   |
+| :------- | :----------------------------------- |
+| **步骤**   | ① 标记存活对象 → ② 将存活对象向一端移动 → ③ 清理边界外的内存 |
+| **优点**   | 解决了碎片问题                              |
+| **缺点**   | 效率比标记-清除稍低                           |
+| **适用区域** | 老年代                                  |
+
+---
+
+## 3. 主流垃圾收集器对比
+
+垃圾收集器是上述算法在不同场景下的具体实现。
+
+| 收集器                   | 所属年代 | 算法           | 线程模型  | 特点与适用场景                                                         |
+| :-------------------- | :--- | :----------- | :---- | :-------------------------------------------------------------- |
+| **Serial**            | 新生代  | 复制算法         | 单线程   | GC时会**暂停所有应用线程（STW）**。适用于**单核CPU或内存很小**的环境                      |
+| **Serial Old**        | 老年代  | 标记-整理        | 单线程   | Serial的老年代版本                                                    |
+| **ParNew**            | 新生代  | 复制算法         | 多线程   | Serial的**多线程**版本，常与CMS搭配使用                                      |
+| **Parallel Scavenge** | 新生代  | 复制算法         | 多线程   | **注重吞吐量**，适用于后台计算场景                                             |
+| **Parallel Old**      | 老年代  | 标记-整理        | 多线程   | Parallel Scavenge的老年代版本                                         |
+| **CMS**               | 老年代  | 标记-清除        | 并发    | **注重低延迟**，GC停顿短。会产生碎片，**Java 9已废弃**。适用于**内存<4G、响应敏感**的应用        |
+| **G1**                | 不分代  | 整体标记-整理，局部复制 | 并发+并行 | 将堆划分为多个**Region**，**优先回收垃圾最多的区域**。可预测停顿，适用于**堆>6GB、追求低延迟**的通用场景 |
+| **ZGC**               | 不分代  | 着色指针、读屏障     | 并发    | **超低延迟**，停顿<10ms。适用于**超大堆（TB级）、极致响应**的场景                        |
+| **Shenandoah**        | 不分代  | 并发压缩、读屏障     | 并发    | 与ZGC类似，**超低延迟**                                                 |
+
+> **关于 STW (Stop-The-World)**：指GC发生时，所有应用线程被暂停。不同收集器，STW的时间长短差异巨大。
+
+---
+
+## 4. 垃圾收集器选择与启用
+
+### 4.1 选择建议
+
+| 场景         | 推荐收集器                               | 说明                        |
+| :--------- | :---------------------------------- | :------------------------ |
+| **默认优先**   | JVM默认（JDK 8: Parallel / JDK 9+: G1） | 先跑起来，通过监控发现问题后再调优         |
+| **通用首选**   | **G1**                              | 内存 > 4-6GB 的现代服务器应用，通用且安全 |
+| **极致低延迟**  | **ZGC / Shenandoah**                | 对延迟有极致要求（<10ms），且JDK版本支持  |
+| **高吞吐量**   | **Parallel GC**                     | 后台批处理、计算任务，允许较长停顿         |
+| **单核/小内存** | **Serial GC**                       | 单核CPU或内存 < 100M 的环境       |
+| **性能测试**   | **Epsilon GC**                      | 无操作GC，仅用于性能测试             |
+
+### 4.2 启用方式
+
+在JVM启动参数中通过 `-XX:+Use` 系列参数指定：
+
+| 收集器 | 启用参数 |
+| :--- | :--- |
+| Serial + Serial Old | `-XX:+UseSerialGC` |
+| Parallel Scavenge + Parallel Old | `-XX:+UseParallelGC` |
+| ParNew + CMS | `-XX:+UseConcMarkSweepGC` |
+| G1 | `-XX:+UseG1GC` |
+| ZGC | `-XX:+UseZGC` |
+| Shenandoah | `-XX:+UseShenandoahGC` |
+
+---
+
+## 5. 调优关键参数
+
+### 5.1 通用参数
+
+| 参数 | 说明 | 建议 |
+| :--- | :--- | :--- |
+| `-Xms` | 堆内存初始大小 | 与 `-Xmx` 设为相同 |
+| `-Xmx` | 堆内存最大大小 | 生产环境必须设置 |
+| `-Xmn` | 新生代大小 | 推荐占堆内存的 **1/3 ~ 1/2** |
+| `-XX:MetaspaceSize` | 元空间初始大小 | 根据类加载数量设置 |
+| `-XX:MaxMetaspaceSize` | 元空间最大大小 | **建议设置上限** |
+
+### 5.2 G1 专属参数
+
+| 参数 | 说明 | 默认值 |
+| :--- | :--- | :--- |
+| `-XX:MaxGCPauseMillis` | 期望的最大GC停顿时间 | 200ms |
+| `-XX:G1HeapRegionSize` | 每个Region的大小 | 自动调整（1MB ~ 32MB） |
+| `-XX:G1NewSizePercent` | 新生代初始占比 | 5% |
+| `-XX:G1MaxNewSizePercent` | 新生代最大占比 | 60% |
+
+### 5.3 Parallel GC 专属参数
+
+| 参数 | 说明 |
+| :--- | :--- |
+| `-XX:ParallelGCThreads` | GC并行线程数 |
+| `-XX:MaxGCPauseMillis` | 最大GC停顿时间（G1更擅长控制） |
+
+### 5.4 CMS 专属参数
+
+| 参数 | 说明 |
+| :--- | :--- |
+| `-XX:CMSInitiatingOccupancyFraction` | 触发CMS GC的老年代占用比例 |
+| `-XX:+UseCMSCompactAtFullCollection` | 在Full GC后整理内存碎片 |
+
+---
+
+## 6. 总结
+
+理解JVM的GC方式，就是理解从**算法** → **收集器** → **参数调优**的完整过程：
+
+1. **理论是基础**：分代收集理论和标记-清除、复制、标记-整理三种算法是所有GC的基石。
+2. **选择是核心**：根据应用对**吞吐量**和**延迟**的要求，选择合适的垃圾收集器是调优的关键。
+3. **调优是迭代**：通过设置关键的JVM参数，在测试环境持续监控和调整，找到最优配置。
+
+---
+
+## 附：启动参数示例（G1 收集器）
+
+```bash
+java -Xms4G -Xmx4G \
+     -XX:+UseG1GC \
+     -XX:MaxGCPauseMillis=200 \
+     -XX:MetaspaceSize=384M \
+     -XX:MaxMetaspaceSize=512M \
+     -Xloggc:/var/log/app/gc.log \
+     -XX:+PrintGCDetails \
+     -XX:+PrintGCDateStamps \
+     -jar your-app.jar
